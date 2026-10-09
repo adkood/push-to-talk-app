@@ -1,0 +1,15 @@
+{
+  "name": "task-fullstack",
+  "version": "1.0.0",
+  "private": true,
+  "scripts": {
+    "dev": "concurrently -n \"SERVER,CLIENT\" -c \"green,cyan\" \"npm run dev --prefix server\" \"npm run dev --prefix client\"",
+    "client": "npm run dev --prefix client",
+    "server": "npm run dev --prefix server",
+    "build:client": "npm run build --prefix client",
+    "tunnel": "npx localtunnel --port 5173"
+  },
+  "devDependencies": {
+    "concurrently": "^9.1.2"
+  }
+}
