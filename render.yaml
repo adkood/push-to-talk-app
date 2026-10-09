@@ -10,7 +10,7 @@ services:
     healthCheckPath: /health
     envVars:
       - key: NODE_VERSION
-        value: 20.18.0
+        value: 22.14.0
       - key: PORT
         value: 10000
 
@@ -26,6 +26,6 @@ services:
   #   healthCheckPath: /health
   #   envVars:
   #     - key: NODE_VERSION
-  #       value: 20.18.0
+  #       value: 22.14.0
   #     - key: PORT
   #       value: 10000
