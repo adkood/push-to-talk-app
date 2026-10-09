@@ -6,8 +6,15 @@
     "dev": "concurrently -n \"SERVER,CLIENT\" -c \"green,cyan\" \"npm run dev --prefix server\" \"npm run dev --prefix client\"",
     "client": "npm run dev --prefix client",
     "server": "npm run dev --prefix server",
+    "build": "npm --prefix server install && npm --prefix client install && npm --prefix client run build",
+    "build:server": "npm --prefix server install",
     "build:client": "npm run build --prefix client",
+    "start": "node server/src/index.js",
+    "start:server": "node server/src/index.js",
     "tunnel": "npx localtunnel --port 5173"
+  },
+  "engines": {
+    "node": ">=18.0.0"
   },
   "devDependencies": {
     "concurrently": "^9.1.2"

@@ -34,3 +34,41 @@ To test on your phone simultaneously:
 ```bash
 npm run tunnel
 ```
+
+---
+
+## 🌐 Deploy to Render
+
+You can deploy the app to [Render](https://render.com) using either **Single Fullstack Service (Recommended)** or **Standalone Backend Service**.
+
+### Option 1: Fullstack Service (Easiest - 1 URL on Free Tier)
+Deploy both the React frontend and Node.js WebSocket backend together on a single Render Web Service:
+
+1. Push your repository to GitHub / GitLab.
+2. In the Render Dashboard, click **New +** -> **Web Service**.
+3. Connect your repository.
+4. Configure settings:
+   - **Name**: `push-to-talk-app`
+   - **Language**: `Node`
+   - **Branch**: `main`
+   - **Root Directory**: *(Leave empty)*
+   - **Build Command**: `npm run build`
+   - **Start Command**: `npm start`
+   - **Health Check Path**: `/health`
+5. Click **Create Web Service**.
+6. Once deployed, open your `https://your-service.onrender.com` URL in two browser windows or share it with a friend!
+
+### Option 2: Standalone Backend Web Service
+If you want to host the frontend separately (e.g., on Vercel, Netlify, or Render Static Sites):
+
+1. In the Render Dashboard, create a **Web Service** with:
+   - **Root Directory**: `server`
+   - **Build Command**: `npm install`
+   - **Start Command**: `npm start`
+   - **Health Check Path**: `/health`
+2. In your frontend environment variables (e.g. on Vercel), set:
+   - `VITE_WS_URL`: `wss://your-service.onrender.com/ws`
+
+### Option 3: Render Blueprint (1-Click)
+Render detects `render.yaml` automatically when creating a **Blueprint** instance from your repository.
+

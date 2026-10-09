@@ -10,6 +10,32 @@ function tuneSdp(sdp) {
   );
 }
 
+function getWebSocketUrl() {
+  const envUrl = import.meta.env.VITE_WS_URL;
+  if (envUrl && typeof envUrl === 'string' && envUrl.trim()) {
+    let formatted = envUrl.trim();
+    if (formatted.startsWith('http://')) {
+      formatted = 'ws://' + formatted.slice(7);
+    } else if (formatted.startsWith('https://')) {
+      formatted = 'wss://' + formatted.slice(8);
+    } else if (!formatted.startsWith('ws://') && !formatted.startsWith('wss://')) {
+      const protocol = window.location.protocol === 'https:' ? 'wss:' : 'ws:';
+      formatted = `${protocol}//${formatted}`;
+    }
+    try {
+      const url = new URL(formatted);
+      if (url.pathname === '' || url.pathname === '/') {
+        url.pathname = '/ws';
+      }
+      return url.toString();
+    } catch {
+      return formatted;
+    }
+  }
+  const protocol = window.location.protocol === 'https:' ? 'wss:' : 'ws:';
+  return `${protocol}//${window.location.host}/ws`;
+}
+
 export function usePushToTalk({ remoteAudioRef }) {
   const [userId] = useState(() => 'usr_' + Date.now().toString(36) + '_' + Math.random().toString(36).substring(2, 6));
   const [userName, setUserName] = useState('');
@@ -148,8 +174,7 @@ export function usePushToTalk({ remoteAudioRef }) {
   }, [initMicrophone, createPeerConnection]);
 
   useEffect(() => {
-    const protocol = window.location.protocol === 'https:' ? 'wss:' : 'ws:';
-    const ws = new WebSocket(`${protocol}//${window.location.host}/ws`);
+    const ws = new WebSocket(getWebSocketUrl());
     wsRef.current = ws;
 
     ws.onmessage = async (event) => {

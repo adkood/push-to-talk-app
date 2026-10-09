@@ -1,0 +1,31 @@
+services:
+  # Fullstack Web Service on Render (Free Tier Friendly: WebSocket Backend + Frontend in 1 Service)
+  - type: web
+    name: push-to-talk-app
+    runtime: node
+    plan: free
+    region: oregon
+    buildCommand: npm run build
+    startCommand: npm start
+    healthCheckPath: /health
+    envVars:
+      - key: NODE_VERSION
+        value: 20.18.0
+      - key: PORT
+        value: 10000
+
+  # Standalone Backend Web Service (Uncomment if deploying server separately from client)
+  # - type: web
+  #   name: push-to-talk-server
+  #   runtime: node
+  #   plan: free
+  #   region: oregon
+  #   rootDir: server
+  #   buildCommand: npm install
+  #   startCommand: npm start
+  #   healthCheckPath: /health
+  #   envVars:
+  #     - key: NODE_VERSION
+  #       value: 20.18.0
+  #     - key: PORT
+  #       value: 10000
